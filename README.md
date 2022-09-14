@@ -19,12 +19,15 @@ jobs:
 
 ## Options
 
-| Name                 | Required | Default Value | Description                              |
-|----------------------|----------|---------------|------------------------------------------|
-| `use-node`           | :x:      | `true`        | Indicator to setup Node.js and NPM cache |
-| `use-java`           | :x:      | `true`        | Indicator to setup Java and Gradle cache |
-| `java-version`       | :x:      | 17            | Java version to use                      |
-| `java-distribution`  | :x:      | zulu          | Distirbution to use, see [supported distributions](https://github.com/actions/setup-java#supported-distributions) |
+| Name                 | Required            | Default Value | Description                              |
+|----------------------|---------------------|---------------|------------------------------------------|
+| `use-node`           | :x:                 | `true`        | Indicator to setup Node.js and NPM cache |
+| `use-java`           | :x:                 | `true`        | Indicator to setup Java and Gradle cache |
+| `java-version`       | :x:                 | 17            | Java version to use                      |
+| `java-distribution`  | :x:                 | zulu          | Distirbution to use, see [supported distributions](https://github.com/actions/setup-java#supported-distributions) |
+| `azure-npm-registry` | :white_check_mark:  | –             | Azure NPM registry URL                   |
+| `azure-npm-user`     | :white_check_mark:  | –             | Azure NPM registry user                  |
+| `azure-npm-secret`   | :white_check_mark:  | –             | Azure NPM user secret (PAT)              |
 
 ## Release
 
