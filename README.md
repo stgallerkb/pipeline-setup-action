@@ -15,6 +15,10 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: stgallerkb/setup-action@v1.0
+        with:
+            azure-npm-user: ${{ secrets.AZURE_NPM_USER }}
+            azure-npm-secret: ${{ secrets.AZURE_NPM_PAT }}
+            azure-npm-registry: ${{ secrets.AZURE_NPM_REGISTRY }}
 ```
 
 ## Options
