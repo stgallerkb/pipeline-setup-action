@@ -43,3 +43,12 @@ To create a new release follow this guide:
 git tag -a -m "Description of this release" v1.0
 git push --follow-tags
 ```
+
+You may also want to add or update the base major tag, following:
+
+```sh
+# if the tag already exists
+git push --delete origin v1
+git tag -a v1 
+git push --follow-tags
+```
