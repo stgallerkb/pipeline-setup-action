@@ -11,6 +11,7 @@ name: CI
 
 jobs:
   deploy:
+    # This action currently only works on linux!
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -32,6 +33,7 @@ jobs:
 | `azure-npm-registry` | :white_check_mark:  | –             | Azure NPM registry URL                   |
 | `azure-npm-user`     | :white_check_mark:  | –             | Azure NPM registry user                  |
 | `azure-npm-secret`   | :white_check_mark:  | –             | Azure NPM user secret (PAT)              |
+| `timezone`           | :x:                 | Europe/Zurich | The timezone to use (Linux only)         |
 
 ## Release
 

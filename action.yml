@@ -30,6 +30,10 @@ inputs:
   azure-npm-secret:
     description: "Azure PAT to access NPM registry"
     required: true
+  timezone:
+    description: "The timezone to set locally"
+    required: false
+    default: "Europe/Zurich"
 
 runs:
   using: "composite"
@@ -40,6 +44,10 @@ runs:
         echo "Initial GitHub path is $GITHUB_PATH"
         echo "Using action context ${{ github.action_path }} as GitHub Path"
         echo "${{ github.action_path }}" >> $GITHUB_PATH
+      shell: bash
+    
+    - name: Set Timezone
+      run: sudo timedatectl set-timezone ${{ inputs.timezone }}
       shell: bash
 
     - name: Setup Java
