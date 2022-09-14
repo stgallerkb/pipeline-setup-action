@@ -1,0 +1,82 @@
+name: "Setup"
+description: "An action to conveniently setup corporate projects."
+branding:
+  icon: "compass"
+  color: "red"
+
+inputs:
+  use-node:
+    description: "If node setup should be performed (default: true)"
+    required: false
+    default: "true"
+  use-java:
+    description: "If java setup should be performed (default: true)"
+    required: false
+    default: "true"
+  java-version:
+    description: "Java version to use (default: 17)"
+    required: false
+    default: "17"
+  java-distribution: 
+    description: "Java distribution to use (default: zulu)"
+    required: false
+    default: "zulu"
+  azure-npm-registry: 
+    description: "Azure NPM registry URL"
+    required: true
+  azure-npm-user:
+    description: "Azure NPM username"
+    required: true
+  azure-npm-secret:
+    description: "Azure PAT to access NPM registry"
+    required: true
+
+runs:
+  using: "composite"
+
+  steps:
+    - name: Set Context
+      run: |
+        echo "Initial GitHub path is $GITHUB_PATH"
+        echo "Using action context ${{ github.action_path }} as GitHub Path"
+        echo "${{ github.action_path }}" >> $GITHUB_PATH
+      shell: bash
+
+    - name: Setup Java
+      if: ${{ inputs.use-java }} == 'true'
+      uses: actions/setup-java@v3
+      with:
+        distribution: ${{ inputs.java-distribution }}
+        java-version: ${{ inputs.java-version }}
+        cache: 'gradle'
+
+    - name: Create .npmrc
+      shell: bash
+      run: |
+        {
+          echo '@sgkb-sow:registry=https://${{ inputs.azure-npm-registry }}'
+          echo 'always-auth=true'
+          echo '//${{ inputs.azure-npm-registry }}/:username=${{ inputs.azure-npm-user }}'
+          echo '//${{ inputs.azure-npm-registry }}/:_password=${{ inputs.azure-npm-secret }}'
+        } >> ${{ github.workspace }}/.npmrc
+
+    - name: Setup Node
+      if: ${{ inputs.use-node }} == 'true'
+      uses: actions/setup-node@v3
+      with:
+        cache: 'npm'
+        node-version-file: '.nvmrc'
+
+    - name: Cache NPM
+      if: ${{ inputs.use-node }} == 'true'
+      id: cache-node-modules
+      uses: actions/cache@v3
+      with:
+        path: "**/node_modules"
+        key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
+        restore-keys: ${{ runner.os }}-npm-
+
+    - name: Install NPM dependencies
+      if: steps.cache-node-modules.outputs.cache-hit != 'true'
+      shell: bash
+      run: npm install
