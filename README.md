@@ -34,6 +34,7 @@ jobs:
 | `azure-npm-user`     | :white_check_mark:  | –             | Azure NPM registry user                  |
 | `azure-npm-secret`   | :white_check_mark:  | –             | Azure NPM user secret (PAT)              |
 | `timezone`           | :x:                 | Europe/Zurich | The timezone to use (Linux only)         |
+| `use-strict-npm-lockfile` | :x:            | `true`        | Exits on post-install if the lockfile changed (out of sync) |
 
 ## Release
 
