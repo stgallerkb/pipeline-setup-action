@@ -93,6 +93,10 @@ runs:
       shell: bash
       run: npm install
 
+    - name: Ignore generated .npmrc changes
+      shell: bash
+      run: git update-index --assume-unchanged .npmrc
+
     - name: Check for lockfile changes
       if: ${{ inputs.use-strict-npm-lockfile }} == "true"
       run: git diff --exit-code
