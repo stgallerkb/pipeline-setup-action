@@ -48,7 +48,9 @@ You may also want to add or update the base major tag, following:
 
 ```sh
 # if the tag already exists
-git push --delete origin v1
+git push --delete origin v1 
+git tag -d v1
+# create new tag
 git tag -a v1 
 git push --follow-tags
 ```
