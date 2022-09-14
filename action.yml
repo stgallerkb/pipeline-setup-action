@@ -13,6 +13,10 @@ inputs:
     description: "If java setup should be performed (default: true)"
     required: false
     default: "true"
+  use-strict-npm-lockfile:
+    description: "If enabled, the pipeline will exit when package-lock is not up to date (default: true)"
+    required: false
+    default: "true"
   java-version:
     description: "Java version to use (default: 17)"
     required: false
@@ -88,3 +92,8 @@ runs:
       if: steps.cache-node-modules.outputs.cache-hit != 'true'
       shell: bash
       run: npm install
+
+    - name: Check for lockfile changes
+      if: ${{ inputs.use-strict-npm-lockfile }} == "true"
+      run: git diff --exit-code
+      shell: bash
